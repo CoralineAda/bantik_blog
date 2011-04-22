@@ -33,7 +33,7 @@ class Post
   # Scopes =========================================================================================
   scope :drafts,      :where => {:state => 'draft'}
   scope :published,   :where => {:state => 'published'}, :descending => :publication_date
-  scope :by_slug, lambda {|slug| {:where => {:slug.in => ["#{slug}".gsub('//','/'), "/#{slug}/".gsub('//','/')] } } }
+  scope :by_slug, lambda {|slug| {:where => {:slug.in => ["#{slug}".gsub('//','/'), "/#{slug}/".gsub('//','/'), "/#{slug}"] } } }
   scope :featured, :where => { :featured => true }
 
   # Relationships ==================================================================================

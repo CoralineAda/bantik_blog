@@ -6,8 +6,8 @@ class PostsController < ApplicationController
   def show
     @post = @blog.posts.published.by_slug(params[:post_slug]).first
     @subtopic = @post.topic
-    unless @subtopic.nil
-      @topic = @subtopic.parent? ? @subtopic.parent : @subtopic
+    unless @subtopic.nil?
+      @topic = @subtopic.parent ? @subtopic.parent : @subtopic
     end
     @comment = Comment.new(params[:comment])
   end
