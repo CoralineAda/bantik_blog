@@ -1,0 +1,37 @@
+<% if @comment.errors.any? %>
+<div id="error_explanation">
+  <h2>Please correct the following errors:</h2>
+  <% @comment.errors.to_a.in_groups(2, false).each do |group| %>
+  <ul>
+    <% group.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  <br style="clear: both;" />
+</div>
+<br style="clear: both;" />
+<% end %>
+
+<%= form_for @comment, :url => comments_url do |f| %>
+  <fieldset class="form_container">
+    <%= legend_tag 'Leave a Comment' -%>
+
+    <div class="form_column">
+      <%= f.hidden_field :post_id, :value => @post.id.to_s -%>
+      <%= f.text_field :author, :label => 'Name' -%>
+      <%= f.text_field :author_email, :label => 'Email (will not be displayed)' -%>
+      <%= f.text_field :author_url, :label => 'URL' -%>
+    </div>
+    <div class="form_column">
+      <%= f.text_area :content, :label => 'Comment' -%>
+    </div>
+    <br style="clear: both;" />
+    <%= recaptcha_tags :display => {:theme => 'clean'} %>
+    <div class="link_block">
+      <%= f.submit 'Submit', :class => 'link_button' -%>
+    </div>
+  </fieldset>
+<%- end -%>
+
+<br style="clear: both;" />

@@ -1,0 +1,5 @@
+<% set_title 'Edit a Blog' %>
+
+<%= form_for @blog, :url => admin_blog_url(@blog) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f } %>
+<%- end -%>

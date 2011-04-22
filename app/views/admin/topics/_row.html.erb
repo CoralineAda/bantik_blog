@@ -1,0 +1,32 @@
+<tr class="<%= cycle('odd', 'even') -%> <%= topic.root? ? 'root_row' : '' -%>" style="cursor: move;"  id="topic_<%= topic.id -%>">
+  <td style="padding-left: <%= topic.subtopic? ? 2 : 1 -%>em;"><%= link_to topic.name, admin_blog_topic_url(@blog, topic) -%></td>
+  <td><%= topic.humanize_path -%></td>
+  <td><%= topic.posts.count -%></td>
+  <td class="crud_links">
+    <%= link_to image_tag('/images/icons/view.png'), admin_blog_topic_path(@blog, topic) -%>
+    <%= link_to image_tag('/images/icons/edit.png'), edit_admin_blog_topic_path(@blog, topic) -%>
+    <%= link_to image_tag('/images/icons/delete.png'), admin_blog_topic_path(@blog, topic), :method => :delete, :confirm => 'Are you sure? This action cannot be undone.' -%>
+  </td>
+</tr>
+
+<%= draggable_element(
+    "topic_#{topic.id}",
+    :ghosting => true,
+    :revert => true
+  )
+-%>
+
+<%- if params[:mode] != 'ordering' -%>
+  <%= drop_receiving_element(
+       "topic_#{topic.id}",
+       :update => 'itemlist',
+       :with => "'subtopic_id=' + element.id",
+       :url => { :action => 'restructure', :blog_id => @blog.id, :topic_id => topic.id},
+       :hoverclass => "drag_highlight"
+     )
+  -%>
+  <%- topic.children.each do |subtopic| -%>
+    <%= render 'row', :topic => subtopic -%>
+  <%- end -%>
+<%- end -%>
+

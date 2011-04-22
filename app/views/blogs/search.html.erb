@@ -1,0 +1,14 @@
+<%- set_title "Search the #{@blog.title} Archives" -%>
+
+<%= form_tag(search_blog_path, :method => :get) do -%>
+  <fieldset>
+    <label for="keyword">Search for:</label><br />
+    <%= text_field_tag "keyword", params[:keyword] -%>
+  </fieldset>
+  <%= submit_tag "GO" -%>
+<%- end -%>
+
+<%- if params[:keyword] -%>
+  <h2>Search Results (<%= @posts.count -%>)</h2>
+  <%= render :partial => 'posts/index', :locals => {:posts => @posts, :show_summary => true} -%>
+<%- end -%>

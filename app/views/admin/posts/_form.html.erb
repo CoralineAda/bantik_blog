@@ -1,0 +1,68 @@
+<%= javascript_include_tag :ckeditor %>
+
+<% if @post.errors.any? %>
+  <div id="error_explanation">
+    <h2>Please correct the following errors::</h2>
+    <% @post.errors.to_a.in_groups(2, false).each do |group| %>
+    <ul>
+      <% group.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+    <br style="clear: both;" />
+    <% end %>
+    <br style="clear: both;" />
+  </div>
+  <br style="clear: both;" />
+<% end %>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Post Details' -%>
+  <div class="form_column">
+    <%= f.text_field :title, :label => 'Title', :help => 'This title will appear on the post before any content, and is used by search engines to identify the main idea of the post.' -%>
+    <%= f.text_field :desired_slug, :help => "The permalink forms part of the URL for this post. For example, entering my-post will create the URL '#{@blog.humanize_path}my-post/'.", :label => 'Permalink', :value => @post.slug || '/'-%>
+    <%- if @blog.has_topics? -%>
+      <%= f.select :topic_id, topics_for_select, :include_blank => 'Select...', :label => 'Topic' -%>
+    <%- end -%>
+  </div>
+  <div class="form_column">
+    <%= f.date_select :publication_date, :order => [:month, :day, :year] -%>
+    <%= f.select :state, Post::STATES.map{|s| s.capitalize}, :selected => @post.status, :label => 'Status', :help => 'A post may either be in a published or draft state. Draft content can be previewed but will not appear on the public-facing blog.' -%>
+    <%= f.check_box :allow_comments, :inline_label => "Allow Comments", :label => "Options" -%>
+    <%= f.check_box :featured, :inline_label => "Featured on Home Page", :label => false -%>
+  </div>
+</fieldset>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Summary', :help => 'The summary should provide a brief overview of the content of this post, up to 255 characters. This description will be displayed on the main blog page and may also be displayed with the post title on search engine results pages.' -%>
+  <div class="form_column">
+    <fieldset>
+      <label for="post_summary">Summary (<span id="meta_counter">255</span> characters remaining)</label><br />
+      <%= f.text_area :summary, :maxlength => 255, :label => false, :fieldset => false -%>
+      <%= countdown_field('post_summary','meta_counter',255) %>
+    </fieldset>
+  </div>
+  <div class="form_column">
+    <%= f.text_area :tags -%>
+  </div>
+</fieldset>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Content&nbsp;' -%>
+  <div class="form_column">
+    <%= f.cktext_area :content, :toolbar => 'Full', :id => 'content_field', :width => '900px', :height => '500px' -%>
+  </div>
+  <div class="form_column">
+  </div>
+  <div class="link_block">
+    <%= f.submit 'Publish', :class => 'link_button' -%>
+    <%= f.submit 'Save as Draft', :class => 'link_button' -%>
+    <%= f.submit 'Preview', :class => 'link_button' -%>
+    <%- if @post.new_record? -%>
+      <%= link_to 'Cancel', admin_blog_posts_path(@blog), :class => 'link_button' -%>
+    <%- else -%>
+      <%= link_to 'Cancel', admin_blog_post_path(@blog, @post), :class => 'link_button' -%>
+    <%- end -%>
+  </div>
+</fieldset>
+

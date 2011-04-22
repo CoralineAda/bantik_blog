@@ -1,0 +1,24 @@
+<%- set_title 'Blog Details' -%>
+
+<fieldset class="form_container">
+  <%= legend_tag 'About This Blog' -%>
+
+  <div class="form_column">
+    <%= faux_field 'Blog Title', @blog.title %>
+    <%= faux_field 'URL', @blog.humanize_path %>
+    <%= faux_field 'Posts Per Page', @blog.posts_per_page %>
+    <%= faux_field 'Topic Pages', @blog.has_topics ? "Enabled" : "Disabled" %>
+  </div>
+  <div class="form_column">
+    <%= faux_field 'RSS Feed', @blog.rss_enabled? ? "Enabled" : "Disabled" %>
+    <%= faux_field 'Feed Address', @blog.feed_address %>
+    <%= faux_field 'Description', @blog.description %>
+  </div>
+  <br style="clear: both;" />
+</fieldset>
+
+<div class="link_block attached">
+  <%= link_to 'Edit', edit_admin_blog_path(@blog), :class => 'link_button' -%>
+  <%= link_to 'Back', '/', :class => 'link_button' -%>
+</div>
+

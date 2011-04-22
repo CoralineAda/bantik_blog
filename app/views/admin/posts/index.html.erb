@@ -1,0 +1,46 @@
+<%- set_title 'Blog Posts' -%>
+
+<%= select_tag_for_filter("blog_posts", @filters, params) %>
+
+<%- if @posts.empty? && params[:show] -%>
+  <p><em>No <%= params[:show] -%> posts have been written.</em></p>
+<%- elsif @posts.empty? -%>
+  <p><em>No posts have been written yet.</em></p>
+<%- else -%>
+  <table class="standard">
+    <tr>
+      <th style="width: 20%;"><%= sort_link("admin/blogs/#{@blog.id}/posts", 'title', params) -%></th>
+      <%- if @blog.has_topics? -%>
+        <th style="width: 20%;"><%= sort_link("admin/blogs/#{@blog.id}/posts", 'topic_name', params) -%></th>
+      <%- end -%>
+      <th style="width: 10%;"><%= sort_link("admin/blogs/#{@blog.id}/posts", 'state', params) -%></th>
+      <th style="width: 10%;"><%= sort_link("admin/blogs/#{@blog.id}/posts", 'publication_date', params) -%></th>
+      <th style="width: 5%;"></th>
+  </tr>
+
+  <%- @posts.each do |post| -%>
+    <tr class="<%= cycle('odd', 'even') -%>">
+      <td><%= link_to post.title, admin_blog_post_path(@blog, post) -%></td>
+      <%- if @blog.has_topics? -%>
+      <td><%= post.topic.full_name -%></td>
+      <%- end -%>
+      <td><%= post.status -%></td>
+      <td><%= post.publication_date.try(:to_s, :concise) -%></td>
+      <td class="crud_links">
+        <%= link_to image_tag('/images/icons/view.png'), admin_blog_post_path(@blog, post) -%>
+        <%= link_to image_tag('/images/icons/edit.png'), edit_admin_blog_post_path(@blog, post) -%>
+        <%= link_to image_tag('/images/icons/delete.png'), admin_blog_post_path(@blog, post), :method => :delete, :confirm => 'Are you sure? This action cannot be undone.' -%>
+      </td>
+    </tr>
+  <%- end -%>
+  </table>
+<%- end -%>
+
+<div class="link_block attached table">
+  <%= link_to "New Post...", new_admin_blog_post_path(@blog), :class => 'link_button' -%>
+</div>
+
+<%- unless @posts.empty? -%>
+  <div class="pagination_controls"><%= paginate @posts -%></div>
+<%- end -%>
+

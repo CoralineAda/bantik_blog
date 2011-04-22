@@ -1,0 +1,19 @@
+== Installation
+
+Add to your Gemfile:
+
+* gem "bantik_blog"
+
+Install BantikBlog into your application:
+
+* rake bantik_blog:install
+
+Copy views for customization:
+
+* rake bantik_blog:views
+
+Wire up admin:
+
+• Link to /admin/blogs/
+
+

@@ -1,0 +1,24 @@
+<td>
+  <%- if comment.author_email -%>
+    <%= gravatar_image_tag(comment.author_email, :style => 'float: left; margin-right: 1em;') -%>
+  <%- end -%>
+  <%= comment.author -%><br />
+  <%= comment.author_email -%><br />
+</td>
+<td>
+  <%= comment.post ? link_to("<em>#{comment.post.title}</em>".html_safe, "http://#{Rails.application.config.main_host}#{comment.post.full_path}", :target => "_blank", :class => 'no_decoration') : '-' -%>
+</td>
+<td>
+  <%=h truncate(strip_tags(comment.content), :omission => '...', :length => 150) -%><br />
+  <%= link_to 'Read the rest', admin_blog_comment_path(@blog, comment) if comment.content.length > 150 -%>
+</td>
+<td><%= comment.created_at.to_s(:concise) -%></td>
+<td class="crud_links">
+  <%- if comment.pending? -%>
+    <%= link_to image_tag('/images/icons/approve.png', :style => 'margin-right: 1em;'), approve_admin_blog_comment_path(@blog, comment)  -%>
+    <%= link_to image_tag('/images/icons/reject.png'), admin_blog_comment_path(@blog, comment), :method => :delete  -%>
+  <%- else -%>
+    <%= link_to image_tag('/images/icons/view.png'), admin_blog_comment_path(@blog, comment)-%>
+    <%= link_to image_tag('/images/icons/delete.png'), admin_blog_comment_path(@blog, comment), :method => :delete  -%>
+  <%- end -%>
+</td>

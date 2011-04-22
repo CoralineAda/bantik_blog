@@ -1,0 +1,5 @@
+<% set_title 'Create a New Blog Topic' %>
+
+<%= form_for @topic, :url => admin_blog_topics_url(@blog) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f } %>
+<%- end -%>

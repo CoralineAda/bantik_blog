@@ -1,0 +1,59 @@
+<%- set_title @topic.name -%>
+<%- meta_description strip_tags(@topic.short_description) -%>
+
+<%= content_for :head do -%>
+  <%= auto_discovery_link_tag(:rss, @blog.feed_address, {:title => "#{@blog.title} Articles in the #{@topic.name} Category RSS"}) if @blog.rss_enabled? -%>
+<%- end -%>
+
+<div class="introductory_content hr_dark_bottom">
+  <%= @topic.description.html_safe -%>
+</div>
+
+<%- unless @subtopics.empty? -%>
+
+  <%- @subtopics.each do |subtopic| -%>
+    <h3><%= link_to "#{subtopic.name}", subtopic.humanize_path -%> (<span class="byline"><%= pluralize(subtopic.posts.count, "article") -%></span>) </h3>
+    <span class="summary"><%= subtopic.short_description.html_safe -%></span>
+  <%- end -%>
+
+<%- end -%>
+
+<%- unless @posts.empty? -%>
+
+  <%- if @featured_image -%>
+
+    <div class="two_column">
+      <%- @posts[0..2].each do |post| -%>
+        <%= render 'summary', :post => post -%>
+      <%- end -%>
+    </div>
+
+    <div class="two_column">
+      <%= tag_for_image_with_caption(@featured_image.media.url(:featured_post_image), "#{@featured_image.caption}<br />From '#{link_to @featured_post.post_title, @featured_post.url}'", :div => {:class => 'featured_image'}, :image => {:alt => @featured_image.description}) -%>
+    </div>
+
+    <br style="clear: both;" />
+
+    <%- if @posts.size > 3 -%>
+      <%- @posts[3..-1].in_groups_of(2) do |group| -%>
+        <%- group.each do |post| -%>
+          <%- if post -%><div class="two_column"><%= render 'summary', :post => post -%></div><%- end -%>
+        <%- end -%>
+        <br style="clear: both;" />
+      <%- end -%>
+    <%- end -%>
+
+  <%- else -%>
+    <%- @posts.in_groups_of(2, false) do |g| -%>
+       <%- g.each do |post| -%>
+         <div class="two_column">
+            <h3><%= link_to post.title, post.full_path, :title => post.title -%></h3>
+            <p class="byline">Published <%= post.publication_date.to_s(:month_day_year) -%> | <%= pluralize(post.comments.count, 'comment') -%></p>
+            <p><%= post.summary -%></p>
+         </div>
+      <%- end -%>
+      <br style="clear: both;" />
+    <%- end -%>
+  <%- end -%>
+
+<%- end -%>

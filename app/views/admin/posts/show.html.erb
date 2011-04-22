@@ -1,0 +1,42 @@
+<%- set_title 'Post Details' -%>
+
+<fieldset class="form_container">
+  <%= legend_tag 'About This Post' -%>
+
+  <div class="form_column">
+    <%= faux_field 'Title', @post.title %>
+    <%= faux_field 'URL', @post.full_path %>
+    <%= faux_field 'Topic', @post.topic.full_name if @post.topic -%>
+  </div>
+  <div class="form_column">
+    <%= faux_field 'Status', @post.status %>
+    <%= faux_field 'Publication Date', @post.publication_date.try(:to_s, :concise) %>
+  </div>
+</fieldset>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Summary' -%>
+  <div class="form_column">
+    <%= faux_field 'Summary', strip_tags(@post.summary) %>
+  </div>
+  <div class="form_column">
+    <%= faux_field 'Tags', @post.tags %>
+  </div>
+</fieldset>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Content&nbsp;' -%>
+  <%- if @post.state == 'published' -%>
+    <iframe src="<%= @post.full_path -%>" width="100%" height="400px" style="background-color: #ffffff;"></iframe>
+  <%- else -%>
+    <div style="background-color: #ffffff; padding: 1em;">
+      <%= @post.content.html_safe -%>
+    </div>
+  <%- end -%>
+  <div class="link_block">
+    <%= link_to 'Edit', edit_admin_blog_post_path(@blog, @post), :class => 'link_button' -%>
+    <%= link_to 'Back', admin_blog_posts_path(@blog), :class => 'link_button' -%>
+  </div>
+</fieldset>
+
+

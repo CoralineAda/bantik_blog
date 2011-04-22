@@ -1,0 +1,14 @@
+<div class="comment_id_block">
+  <%- if comment.author_email -%>
+    <%= gravatar_image_tag(comment.author_email, :alt => comment.author) -%><br />
+  <%- end -%>
+  <%- unless comment.author_url.blank? -%>
+    <%= link_to comment.author, comment.author_url, :rel => 'nofollow' -%>
+  <%- else -%>
+    <%= comment.author -%>
+  <%- end -%>
+  <br /><%=h comment.created_at.to_s(:concise) %>
+</div>
+<blockquote class="comment_content_block">
+  <%=h comment.content -%>
+</blockquote>

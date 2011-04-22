@@ -1,0 +1,41 @@
+<% if @topic.errors.any? %>
+<div id="error_explanation">
+  <h2>Please correct the following errors:</h2>
+  <% @topic.errors.to_a.in_groups(2, false).each do |group| %>
+  <ul>
+    <% group.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  <br style="clear: both;" />
+</div>
+<br style="clear: both;" />
+<% end %>
+
+<fieldset class="form_container">
+  <%= legend_tag 'About This Blog Topic' -%>
+
+  <div class="form_column">
+    <%= f.text_field :name -%>
+    <%= f.select :parent_id, @blog.topics.roots.map{|r| [r.name, r.id]}, :label => 'Parent Topic', :include_blank => 'None' -%>
+  </div>
+  <div class="form_column">
+    <%= f.check_box :active, :inline_label => 'Yes' -%><br />
+    <%= f.check_box :featured, :inline_label => 'Yes' -%>
+  </div>
+  <br style="clear: both;" />
+  <div class="form_column">
+    <%= f.text_area :short_description -%>
+  </div>
+  <div class="form_column">
+    <%= f.text_area :description -%>
+  </div>
+  <br style="clear: both;" />
+  <div class="link_block">
+    <%= f.submit 'Save', :class => 'link_button' -%>
+    <%= link_to 'Cancel', admin_blog_topics_path(@blog), :class => 'link_button' -%>
+  </div>
+</fieldset>
+
+<br style="clear: both;" />

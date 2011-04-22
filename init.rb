@@ -1,0 +1,1 @@
+require 'bantik_blog'

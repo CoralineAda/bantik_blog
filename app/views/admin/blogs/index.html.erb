@@ -1,0 +1,30 @@
+<%- set_title "Manage Your Blog" -%>
+
+<%- if @blog.new_record? -%>
+  <%= menu_item(:heading => 'Set Up Blog',
+        :url => new_admin_blog_path,
+        :description => 'Set configuration options for your new blog.'
+      )
+  -%>
+<%- else -%>
+  <%= menu_item(
+        :heading => 'Manage Posts',
+        :url => admin_blog_posts_path(@blog),
+        :description => "Create and edit blog posts.",
+        :id => 'blog_posts'
+      )
+  -%>
+  <%= menu_item(
+        :heading => 'Manage Topics',
+        :url => admin_blog_topics_path(@blog),
+        :description => "Create and manage blog categories.",
+        :id => 'blog_topics'
+      )
+  -%>
+  <%= menu_item(
+        :heading => 'Blog Configuration',
+        :url => admin_blog_path(@blog),
+        :description => "Change settings for your blog."
+      )
+  -%>
+<%- end -%>

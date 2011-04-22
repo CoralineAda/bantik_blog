@@ -1,0 +1,18 @@
+<%- set_title @blog.title -%>
+<%= auto_discovery_link_tag(:rss, "#{@blog.feed_address}", {:title => "#{@blog.title} Articles RSS"}) if @blog.rss_enabled? -%>
+
+<p><%= @blog.description -%></p>
+
+<%- if @blog.has_topics -%>
+  <%= render :partial => 'topics/index' -%>
+<%- else -%>
+  <%= render :partial => 'posts/index', :locals => {:posts => @posts, :show_summary => true} -%>
+  <div class="pagination_controls"><%= paginate @posts -%></div>
+<%- end -%>
+
+<div class="blog_links">
+  <ul>
+    <li><%= link_to "Archives", "#{@blog.humanize_path}archive" -%></li>
+    <li><%= link_to "Search", "#{@blog.humanize_path}search" -%></li>
+  </ul>
+</div>

@@ -1,0 +1,52 @@
+/* @group General IE Workarounds */
+
+	fieldset.form_container {
+	  clear: both;
+	  width: 96%;
+	  z-index: 0;
+	}
+
+  legend {
+    display: none;
+  }
+
+  .faux_legend {
+    border: 1px solid #999999;
+    padding: .5em;
+    background-color: #79984c;
+    color: #ffffff;
+    margin-top: -2.5em;
+    margin-left: -1.4em;
+    width: 26.5em;
+    font-weight: bold;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding-left: 1em;
+  }
+
+/* @end */
+
+/* @group IE6 Workarounds */
+
+	/* Add support for hover, for nav menu */
+	*html body {
+    	behavior:url("/stylesheets/csshover3.htc");
+	}
+
+	* html fieldset.form_container {
+	  width: 92%;
+	  margin-top: 20px !important;
+	  z-index: 0;
+	}
+
+	* html p {
+	margin-bottom: 1.5em;
+	}
+
+	* html .faux_legend {
+	margin-top: -12px;
+	}
+
+
+/* @end */
+

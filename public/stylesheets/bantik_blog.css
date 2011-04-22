@@ -1,0 +1,26 @@
+div.menu_icon#set_up_blog {
+  background: url(../images/menu_icons/blog.png) no-repeat center top;
+  border: none;
+}
+
+div.menu_icon#set_up_blog:hover {
+  background: url(../images/menu_icons/blog_on.png) no-repeat center top;
+}
+
+div.menu_icon#blog_configuration {
+  background: url(../images/menu_icons/blog.png) no-repeat center top;
+  border: none;
+}
+
+div.menu_icon#blog_configuration:hover {
+  background: url(../images/menu_icons/blog_on.png) no-repeat center top;
+}
+
+div.menu_icon#manage_posts {
+  background: url(../images/menu_icons/blog_posts.png) no-repeat center top;
+}
+
+div.menu_icon#manage_posts:hover {
+  background: url(../images/menu_icons/blog_posts_on.png) no-repeat center top;
+}
+

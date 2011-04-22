@@ -1,0 +1,28 @@
+<%- if @topics.empty? -%>
+  <p><em>No articles have been created yet.</em></p>
+<%- else -%>
+
+  <%- @topics.to_a.in_groups_of(2) do |group| -%>
+    <%- group.each do |topic| -%>
+      <%- if topic -%>
+        <div class="two_column">
+          <h2><%= link_to "#{topic.name} &raquo;".html_safe, topic.humanize_path -%></h2>
+          <%= topic.short_description.html_safe -%>
+          <ul class="bulleted">
+          <%- topic.children.each do |subtopic| -%>
+            <li>
+              <%= link_to "#{subtopic.name}", subtopic.humanize_path -%>
+              <span class="byline">(<%= pluralize(subtopic.posts.count, 'article') -%>)</span>
+            </li>
+          <%- end -%>
+          </ul>
+        </div>
+      <%- end -%>
+    <%- end -%>
+    <br style="clear: both;" />
+  <%- end -%>
+
+<%- end -%>
+
+<br style="clear: both;" />
+

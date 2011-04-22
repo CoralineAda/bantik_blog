@@ -1,0 +1,39 @@
+<%- set_title "#{@post.title}" -%>
+
+<%= @post.content.html_safe -%>
+
+<!--p>
+  <%= link_to '&larr;'.html_safe, @post.previous_post.full_path if @post.previous_post -%>
+  <%= link_to 'Back to Blog', @post.blog.humanize_path -%>
+  <%= link_to '&rarr;'.html_safe, @post.next_post.full_path if @post.next_post -%>
+</p-->
+
+<div class="post_meta">
+  <div class="publication_details">
+    Published <%= "by #{@post.author}" unless @post.author.blank? -%>
+    on <%= @post.publication_date.try(:to_s, :month_day_year) -%>
+    <%- if @post.topic -%>
+    in <%= link_to @post.topic.parent.name, @post.topic.parent.humanize_path -%>: <%= link_to @post.topic.name, @post.topic.humanize_path -%>
+    <%- end -%>
+  </div>
+  <div class="sharing_links">
+    <%= sharing_links(@post) -%>
+  </div>
+</div>
+
+<%- if @post.allow_comments -%>
+
+  <div class="comments_block">
+
+    <h2>Comments</h2>
+
+    <%- unless @post.comments.approved.empty? -%>
+      <%- @post.comments.approved.each do |comment| -%>
+        <%= render :partial => 'comments/show', :locals => {:comment => comment} -%>
+      <%- end -%>
+    <%- end -%>
+  </div>
+
+  <%= render '/comments/form', :locals => { :comment => @comment } %>
+
+<%- end -%>

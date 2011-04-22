@@ -1,0 +1,32 @@
+<%- set_title 'Comment Details' -%>
+
+<fieldset class="form_container">
+  <%= legend_tag 'About This Comment' -%>
+
+  <div class="form_column">
+    <%= faux_field 'Author', @comment.author %>
+    <%= faux_field 'Author URL', @comment.author_url %>
+    <%= faux_field 'Author Email', @comment.author_email %>
+  </div>
+  <div class="form_column">
+    <%= faux_field 'Date', @comment.created_at.to_s(:concise) %>
+    <%= faux_field 'Article', @comment.post.title %>
+  </div>
+  <br style="clear: both;" />
+</fieldset>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Content' -%>
+  <p class="instructions"><%= @comment.content %></p>
+</fieldset>
+
+<div class="link_block attached">
+  <%- if @comment.pending? -%>
+    <%= link_to 'Approve', approve_admin_blog_comments_path(@blog, @comment), :class => 'link_button' -%>
+    <%= link_to 'Reject', approve_admin_blog_comments_path(@blog, @comment), :class => 'link_button' -%>
+  <%- else -%>
+    <%= link_to 'Delete', admin_blog_comments_path(@blog), :class => 'link_button' -%>
+  <%- end -%>
+  <%= link_to 'Back', admin_blog_comments_path(@blog), :class => 'link_button' -%>
+</div>
+

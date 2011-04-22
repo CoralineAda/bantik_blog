@@ -1,0 +1,6 @@
+<%- set_title "#{@blog.title} Archives" -%>
+
+<%- @posts_by_month.keys.sort.each do |month| -%>
+  <h2><%= @posts_by_month[month][:full_date] -%></h2>
+  <%= render :partial => 'posts/index', :locals => {:posts => @posts_by_month[month][:posts], :show_summary => false} -%>
+<%- end -%>

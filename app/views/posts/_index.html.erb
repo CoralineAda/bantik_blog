@@ -1,0 +1,10 @@
+<ul class="posts">
+  <%- posts.each do |post| -%>
+    <li>
+      <h3><%= link_to post.title, post.full_path, :title => post.title -%></h3>
+      <%= content_tag(:p, post.publication_date.try(:to_s, :concise), :class => 'publication_date') if show_summary -%>
+      <%= content_tag(:p, strip_tags(post.summary), :class => 'summary') if show_summary -%></p>
+      <%= link_to "Read More...", post.full_path if show_summary -%>
+    </li>
+  <%- end -%>
+</ul>

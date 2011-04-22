@@ -1,0 +1,37 @@
+<% if @blog.errors.any? %>
+<div id="error_explanation">
+  <h2>Please correct the following errors:</h2>
+  <% @blog.errors.to_a.in_groups(2, false).each do |group| %>
+  <ul>
+    <% group.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  <br style="clear: both;" />
+</div>
+<br style="clear: both;" />
+<% end %>
+
+<fieldset class="form_container">
+  <%= legend_tag 'Blog Settings' -%>
+
+  <div class="form_column">
+    <%= f.text_field :title, :label => 'Blog Title' -%>
+    <%= f.text_field :desired_slug, :label => 'URL Slug', :value => @blog.slug || '/blog/' -%>
+    <%= f.select :posts_per_page, %w{10 20 30 50} -%>
+    <%= f.check_box :has_topics, :label => 'Topic Pages', :inline_label => 'Enabled' -%>
+  </div>
+  <div class="form_column">
+    <%= f.check_box :use_nested_paths, :label => 'Topic and Post URLs', :inline_label => 'Include blog slug' -%><br />
+    <%= f.check_box :rss_enabled, :label => 'RSS Feed', :inline_label => 'Enabled' -%><br />
+    <%= f.text_area :description -%>
+  </div>
+  <br style="clear: both;" />
+  <div class="link_block">
+    <%= f.submit 'Save', :class => 'link_button' -%>
+    <%= link_to 'Cancel', '/', :class => 'link_button' -%>
+  </div>
+</fieldset>
+
+<br style="clear: both;" />

@@ -1,0 +1,53 @@
+<%- set_title 'Blog Topics' -%>
+
+<%- if @topics.empty? -%>
+  <p><em>No topics have been created yet.</em></p>
+<%- else -%>
+
+  <%- if params[:mode] == 'ordering' -%>
+    <p>Topics and sub-topics are shown below. To reorder topics, drag and drop the topics or subtopics into the order you would like. (Subtopics will always display alphabetically.)</p>
+  <%- else -%>
+    <p>Topics and sub-topics are shown below. To create a subtopic, drag a topic to another topic and release the mouse button. To promote a subtopic to root level, drag it to the header row of the table. Note that topics may only be nested one level deep.</p>
+  <%- end -%>
+
+  <label class="inline" for="mode">Modify:</label>
+  <%= select_tag 'mode', options_for_select(['structure','ordering'], params[:mode]) -%>
+
+  <table class="standard" id="top_level">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>URL</th>
+        <th>#&nbsp;Articles</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody id="itemlist">
+      <%= render 'tree', :mode => params[:mode] || 'structure' -%>
+    </tbody>
+  </table>
+
+  <%- if params[:mode] == "ordering" -%>
+    <%= sortable_element "itemlist", :update => nil, :url => { :action => "reorder"}, :tag => 'tr' -%>
+  <%- else -%>
+    <%= drop_receiving_element(
+       "top_level",
+       :update => 'itemlist',
+       :with => "'promote=' + element.id",
+       :url => { :action => 'restructure', :by => params[:by], :dir => params[:dir] },
+       :hoverclass => "drag_highlight"
+     )
+    -%>
+  <%- end -%>
+
+<%- end -%>
+
+<br />
+
+<div class="link_block attached table">
+  <%= link_to "New Topic...", new_admin_blog_topic_path(@blog), :class => 'link_button' -%>
+</div>
+
+<script type="text/javascript">
+ Event.observe($('mode'), 'change', function (){ window.location = "<%= admin_blog_topics_url(@blog) -%>"  + "?mode=" + $('mode').value; });
+</script>

@@ -1,0 +1,7 @@
+<%- if flash[:error] -%>
+  <script type="text/javascript">showModalDialog("<%= flash[:error] -%>");</script>
+<%- end -%>
+
+<%- @topics.each do |topic| -%>
+  <%= render 'row', :topic => topic -%>
+<%- end -%>

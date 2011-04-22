@@ -1,0 +1,37 @@
+<%- set_title 'Comments' -%>
+
+<%- if @comments.empty? && params[:show] == 'all' -%>
+  <p><em>No comments have been created yet.</em></p>
+<%- else -%>
+
+  <%= select_tag_for_filter("blog_comments", @filters, params) %>
+
+  <%- if @comments.empty? -%>
+    <p><em>There are no <%= params[:show] -%> comments.</em></p>
+  <%- else -%>
+
+    <table class="standard">
+      <tr>
+        <th width="25%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'author', params) -%></th>
+        <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'article', params) -%></th>
+        <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/content", 'content', params) -%></th>
+        <th width="10%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'created_at', params) -%></th>
+        <th width="5%"> </th>
+      </tr>
+
+    <%- @comments.each do |comment| -%>
+      <tr class="<%= cycle('odd', 'even') -%>" id="comment_<%= comment.id -%>">
+        <%= render 'row', :comment => comment -%>
+      </tr>
+    <%- end -%>
+    </table>
+
+  <%- end -%>
+
+<%- end -%>
+
+
+<%- unless @comments.empty? -%>
+  <div class="pagination_controls"><%= paginate @comments -%></div>
+<%- end -%>
+

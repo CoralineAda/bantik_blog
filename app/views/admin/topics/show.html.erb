@@ -1,0 +1,23 @@
+<%- set_title 'Topic Details' -%>
+
+<fieldset class="form_container">
+  <%= legend_tag 'About This Topic' -%>
+
+  <div class="form_column">
+    <%= faux_field 'Name', @topic.name %>
+    <%= faux_field 'Short Description', @topic.short_description %>
+    <%= faux_field 'Description', @topic.description %>
+  </div>
+  <div class="form_column">
+    <%= faux_field 'Active', @topic.active %>
+    <%= faux_field 'Featured', @topic.featured %>
+    <%= faux_field 'Parent', @topic.parent_id %>
+  </div>
+  <br style="clear: both;" />
+</fieldset>
+
+<div class="link_block attached">
+  <%= link_to 'Edit', edit_admin_blog_topic_path(@blog, @topic), :class => 'link_button' -%>
+  <%= link_to 'Back', admin_blog_topics_path(@blog), :class => 'link_button' -%>
+</div>
+
