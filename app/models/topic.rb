@@ -69,7 +69,7 @@ class Topic
   end
 
   def last_post_updated_at
-    self.posts.published.first.updated_at
+    self.posts.published.first ? self.posts.published.first.updated_at : nil
   end
 
   def latest_posts(count=3)
