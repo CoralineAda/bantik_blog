@@ -21,6 +21,7 @@
   <div class="form_column">
     <%= f.text_field :title, :label => 'Title', :help => 'This title will appear on the post before any content, and is used by search engines to identify the main idea of the post.' -%>
     <%= f.text_field :desired_slug, :help => "The permalink forms part of the URL for this post. For example, entering my-post will create the URL '#{@blog.humanize_path}my-post/'.", :label => 'Permalink', :value => @post.slug || '/'-%>
+    <%= f.text_field :author -%>
     <%- if @blog.has_topics? -%>
       <%= f.select :topic_id, topics_for_select, :include_blank => 'Select...', :label => 'Topic' -%>
     <%- end -%>
