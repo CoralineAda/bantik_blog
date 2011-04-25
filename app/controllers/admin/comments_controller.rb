@@ -16,6 +16,22 @@ class Admin::CommentsController < ApplicationController
     end
   end
 
+  def mass_update
+    if params[:commit] == "Mark Selected As Spam"
+      params[:comment_ids].each{ |id| Comment.find(id).try(:spammify!) }
+      flash[:notice] = "The selected comments have been marked as spam."
+    end
+    if params[:commit] == "Approve Selected"
+      params[:comment_ids].each{ |id| Comment.find(id).try(:approve!) }
+      flash[:notice] = "The selected comments have been approved."
+    end
+    if params[:commit] == "Delete Selected"
+      params[:comment_ids].each{ |id| Comment.find(id).try(:destroy) }
+      flash[:notice] = "The selected comments have been removed."
+    end
+    redirect_to admin_blog_comments_path(@blog) and return
+  end
+
   # CRUD ===========================================================================================
 
   def index

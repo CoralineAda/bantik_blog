@@ -55,6 +55,9 @@ Rails.application.routes.draw do
             get :approve
             get :reject
           end
+          collection do
+            post :mass_update
+          end
         end
         resources :posts
         resources :topics do

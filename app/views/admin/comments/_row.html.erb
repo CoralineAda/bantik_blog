@@ -1,3 +1,4 @@
+<td><input type="checkbox" name="comment_ids[]" value="<%= comment.id -%>" class="comment_selector" /></td>
 <td>
   <%- if comment.author_email -%>
     <%= gravatar_image_tag(comment.author_email, :style => 'float: left; margin-right: 1em;') -%>

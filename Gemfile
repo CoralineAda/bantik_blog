@@ -9,6 +9,7 @@ gem 'kaminari'
 gem 'mongoid', '>= 2.0.0.beta.17'
 gem 'mongoid_taggable', :git => 'git://github.com/Bantik/mongoid_taggable.git', :branch => 'finder'
 gem 'rails', '>= 3.0.1'
+gem 'rakismet'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'rmagick', '2.12.2' # version compatible with heroku
 gem 'scaffold_logic', '>= 1.0.3'

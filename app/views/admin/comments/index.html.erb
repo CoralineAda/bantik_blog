@@ -10,22 +10,29 @@
     <p><em>There are no <%= params[:show] -%> comments.</em></p>
   <%- else -%>
 
-    <table class="standard">
-      <tr>
-        <th width="25%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'author', params) -%></th>
-        <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'article', params) -%></th>
-        <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/content", 'content', params) -%></th>
-        <th width="10%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'created_at', params) -%></th>
-        <th width="5%"> </th>
-      </tr>
+    <%= form_tag mass_update_admin_blog_comments_path, :method => :post do -%>
+      <table class="standard">
+        <tr>
+          <th width="10px"><input type="checkbox" name="select_all" onclick="toggleAll();"></th>
+          <th width="25%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'author', params) -%></th>
+          <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'article', params) -%></th>
+          <th width="30%"><%= sort_link("admin/blogs/#{@blog.id}/content", 'content', params) -%></th>
+          <th width="10%"><%= sort_link("admin/blogs/#{@blog.id}/comments", 'created_at', params) -%></th>
+          <th width="5%"> </th>
+        </tr>
 
-    <%- @comments.each do |comment| -%>
-      <tr class="<%= cycle('odd', 'even') -%>" id="comment_<%= comment.id -%>">
-        <%= render 'row', :comment => comment -%>
-      </tr>
+      <%- @comments.each do |comment| -%>
+        <tr class="<%= cycle('odd', 'even') -%>" id="comment_<%= comment.id -%>">
+          <%= render 'row', :comment => comment -%>
+        </tr>
+      <%- end -%>
+      </table>
+      <div class="link_block attached table">
+        <%= submit_tag "Approve Selected", :class => 'link_button' -%>
+        <%= submit_tag "Delete Selected", :class => 'link_button' -%>
+        <%= submit_tag "Mark Selected As Spam", :class => 'link_button' -%>
+      </div>
     <%- end -%>
-    </table>
-
   <%- end -%>
 
 <%- end -%>
@@ -35,3 +42,8 @@
   <div class="pagination_controls"><%= paginate @comments -%></div>
 <%- end -%>
 
+<script type="text/javascript">
+  function toggleAll() {
+    $$('.comment_selector').each(function(elem){elem.checked = !elem.checked;});
+  }
+</script>
